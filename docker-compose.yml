@@ -12,9 +12,9 @@ services:
       - client_db
     command: >
       bash -c "
-        npx prisma migrate deploy &&
-        npx prisma generate &&
-        npm run start:dev
+        cp .env.example .env && 
+        npx prisma migrate deploy && 
+        npx prisma generate 
       "
 
   voucher_service:
@@ -28,9 +28,9 @@ services:
       - voucher_db
     command: >
       bash -c "
-        npx prisma migrate deploy &&
-        npx prisma generate &&
-        npm run start:dev
+        cp .env.example .env && 
+        npx prisma migrate deploy && 
+        npx prisma generate
       "
 
   voucher_db:

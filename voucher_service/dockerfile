@@ -7,8 +7,6 @@ WORKDIR /app
 # Copie os arquivos do projeto para o container
 COPY . .
 
-COPY .env.example .env
-
 # Instale as dependências
 RUN npm install
 
