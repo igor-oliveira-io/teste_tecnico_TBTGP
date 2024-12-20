@@ -9,8 +9,8 @@ async function bootstrap() {
   const port = configService.get<number>('PORT') || 3001;
 
   const config = new DocumentBuilder()
-    .setTitle('Client Service API')
-    .setDescription('Client Service API')
+    .setTitle('Voucher Service API')
+    .setDescription('Voucher Service API')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
