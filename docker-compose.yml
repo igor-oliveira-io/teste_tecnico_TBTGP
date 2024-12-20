@@ -1,0 +1,66 @@
+version: "3.8"
+services:
+  client_service:
+    build:
+      context: ./client_service
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./client_service/.env
+    depends_on:
+      - voucher_db
+      - client_db
+    command: >
+      bash -c "
+        npx prisma migrate deploy &&
+        npx prisma generate &&
+        npm run start:dev
+      "
+
+  voucher_service:
+    build:
+      context: ./voucher_service
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./voucher_service/.env
+    depends_on:
+      - voucher_db
+    command: >
+      bash -c "
+        npx prisma migrate deploy &&
+        npx prisma generate &&
+        npm run start:dev
+      "
+
+  voucher_db:
+    image: postgres:latest
+    container_name: voucher_db
+    environment:
+      POSTGRES_USER: voucher_user
+      POSTGRES_PASSWORD: voucher_password
+      POSTGRES_DB: voucher_db
+    volumes:
+      - voucher_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - default
+
+  client_db:
+    image: postgres:latest
+    container_name: client_db
+    environment:
+      POSTGRES_USER: client_user
+      POSTGRES_PASSWORD: client_password
+      POSTGRES_DB: client_db
+    volumes:
+      - client_db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - default
+
+volumes:
+  voucher_db_data:
+  client_db_data:
